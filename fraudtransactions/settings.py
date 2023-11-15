@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-mfh11%5p355h1qewczz2z$&l-1k8+=h8^nxc#xo1(-m151ic67
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['modelo-transacciones-fraudulentas.azurewebsites.net', 'http://modelo-transacciones-fraudulentas.azurewebsites.net/', '127.0.0.1']
 
 
 # Application definition
