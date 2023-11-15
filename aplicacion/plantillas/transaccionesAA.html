@@ -248,7 +248,7 @@
                 }))
 
 
-                const resolve = await fetch('http://127.0.0.1:8000/transaccionesAA/hacer-prediccion',{
+                const resolve = await fetch('https://modelo-transacciones-fraudulentas.azurewebsites.net/transaccionesAA/hacer-prediccion',{
                 method: "POST",
                 body:JSON.stringify({
                     distance_from_home,
