@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de AA para la prediccion de transacciones frauduletas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container">
+        <main>
+          <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="https://atlas.curn.edu.co:8090/gestorrecibo/img/LOGO-CURN-BLANCO-HORIZONTAL.png" alt="Logo CURN" width="" height="57" />
+            <h2>Modelo de Predicción de Transacciones Fraudulentas</h2>
+            <p class="lead">Este formulario cuenta con cierto numero de parametros, los cuales son exigidos como valores de entrada de un modelo de aprendizaje automático desarrollado con las librerias <b>sklearn</b>, <b>imblearn</b>, <b>pandas</b>, <b>numpy</b> y <b>matplot</b> en el lenguaje de programación <b>python</b> e implementado en esta breve aplicacion web usando el framework <b>django</b> por el autor <b>Deivy S. Morales</b> </p>
+          </div>
+
+          <div class="row g-5">
+            <div class="col-md-5 col-lg-4 order-md-last">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Predicciones anteriores</span>
+                <span id="counter" class="badge bg-primary rounded-pill">0</span>
+              </h4>
+              <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Predict 1</h6>
+                    <small class="text-muted">params</small>
+                  </div>
+                  <span class="text-muted">Value</span>
+                </li> -->
+                <!-- Insercion de prediciciones aquí -->
+              <ul id="predicciones" class="list-group mb-3" >
+                
+              </ul>
+
+            </div>
+            <div class="col-md-7 col-lg-8">
+
+
+
+              <h4 class="mb-3">Parametros necesarios</h4>
+
+              <form class="needs-validation" id="formulario" >
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <label htmlFor="firstName" class="form-label">Distancia desde lugar de residencia </label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">km</span>
+                      <input type="text" class="form-control" id="firstName" placeholder="0.0" name="distance_from_home" required />
+                      <div class="invalid-feedback">
+                        Valor necesario
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label htmlFor="lastName" class="form-label">Distancia desde el lugar de la ultima transacción</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">km</span>
+                      <input type="text" class="form-control" id="lastName" placeholder="0.0" name="distance_from_last_transaction" required />
+
+                      <div class="invalid-feedback">
+                        Valor Necesesario
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label htmlFor="username" class="form-label">Relación con el precio medio de compra</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">$</span>
+                      <input type="text" class="form-control" placeholder="0.0" name="ratio_to_median_purchase_price" required data-bs-toggle="tooltip" data-bs-placement="top" title="Se refiere a las veces que cabe el valor ($) promedio de compra en el valor de la compra que se esté haciendo "/>
+                      <div class="invalid-feedback">
+                        Parametro necesario
+                      </div>
+                    </div> 
+                  </div>
+
+
+                  <div class="col-md-6">
+                    <label htmlFor="country" class="form-label">Distribuidor Habitual</label>
+                    <select class="form-select" id="repeat_retailer" name="repeat_retailer" required>
+                      <option value="1.0">Si</option>
+                      <option value="0.0">No</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Parametro necesario
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label htmlFor="country" class="form-label">Es una transaccion con tarjeta de credito</label>
+                    <select class="form-select" id="used_chip" name="used_chip" required>
+                      <option value="1.0">Si</option>
+                      <option value="0.0">No</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Parametro necesario
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label htmlFor="country" class="form-label">Se uso un numero de PIN para la transacción</label>
+                    <select class="form-select" id="used_pin_number" name="used_pin_number" required>
+                      <option value="1.0">Si</option>
+                      <option value="0.0">No</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Parametro necesario
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label htmlFor="country" class="form-label">Es de un pedido en línea</label>
+                    <select class="form-select" id="online_order" name="online_order" required>
+                      <option value="1.0">Si</option>
+                      <option value="0.0">No</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Parametro necesario
+                    </div>
+                  </div>
+
+
+                  <!-- <div class="col-12">
+                    <label htmlFor="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com" />
+                    <div class="invalid-feedback">
+                      Please enter a valid email address for shipping updates.
+                    </div>
+                  </div> -->
+
+
+                  <div class="form-check">
+                    
+                    <label class="form-check-label" htmlFor="save-info">Ver descripcion de campos 
+                      <a  class="" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
+                      Aquí
+                      </a>
+                    </label>
+                  </div>
+
+                  <button id="calcular" class="btn btn-primary" type="submit"
+                  >Calcular</button>
+                </div>
+
+                <hr class="my-4" />
+
+                    <!-- alerta de resultado -->
+                  <div id = "result" class="alert alert-success" role="alert" hidden>
+                     
+                  </div>
+
+
+              </form>
+            </div>
+          </div>
+        </main>
+
+
+        <!-- .................................................................................. -->
+        
+        
+      
+      
+      <div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1" aria-labelledby="exampleModalCenteredScrollableTitle" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalCenteredScrollableTitle"><b>Descripcion de parametros del Modelo de aprendizaje Automático</b></h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p><b>1. Distancia desde el lugar de residencia:</b> Es un valor numérico que hace referencia a la distancia en kilomentros desde el lugar de residencia hasta el lugar en donde se realiza la transacción </p>
+              <p><b>2. Distancia desde el lugar de la última transacción: </b> Es un valor numerico que hace referencia, a la distancia en kilomentros desde donde se realizó la ultima transaccion hasta la ubicación de la actual transacción. </p>
+              <p><b>3. Relación con el precio medio de compra: </b> Es un valor numerico, que alude el numero de veces que cabe el valor promedio de una compra o pago (basada en compras o pagos anteriores) en el valor de la compra o pago actual, por ejemplo si el pecio medio de compra de un usuario es <small>$60.000</small> y su compra actual es de <small>$160.000</small>, la relacion seria de <small>2.6</small> (160.000 / 60.000)</p>
+              <p><b>4. Distribuidor Habitual: </b> Si la compra ha sido o no realizada en un lugar o sitio en el que ya se hubiese comprado antes.</p>
+              <p><b>5. Es una transaccion con tarjeta de credito: </b> Si la transacción se ha hecho usando o no tarjeta de credito </p>
+              <p><b>6. Se usó pin para la transacción</b> Si la transaccion tuvo la necesidad de usar el PIN o clave </p>
+              <p><b>7. Pedido en línea: </b>Si la transacción fue realizada a traves de un metodo de pago en línea </p>
+              <br><br><br>
+              <p><b>Autor:</b> Deivy S. Morales</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        <!-- .................................................................................. -->
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+          <p class="mb-1">&copy; 2023 Deivy Sebastian Morales Peña</p>
+          <ul class="list-inline">
+            <li class="list-inline-item"><a href="https://github.com/sebasmrl">Github</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="https://www.curn.edu.co">CURN</a></li>
+          </ul>
+        </footer>
+      </div>
+
+
+    <script> 
+        const formulario =  document.getElementById("formulario");
+        const listaDePrediciones = document.querySelector('#predicciones');
+        const resultdiv = document.querySelector('#result')
+        const counter = document.querySelector('#counter');
+        const calcularBtn = document.querySelector('#calcular');
+
+        console.log(listaDePrediciones)
+        console.log(formulario)
+
+        let contador = 0;
+
+        formulario.addEventListener("submit", async(e)=>{
+            e.preventDefault();
+            e.stopPropagation();
+
+            calcularBtn.setAttribute("disabled", true);
+            
+            const distance_from_home =  Number(e.target.distance_from_home.value);
+            const distance_from_last_transaction = Number( e.target.distance_from_last_transaction.value);
+            const ratio_to_median_purchase_price= Number( e.target.ratio_to_median_purchase_price.value);
+            
+                if(Number.isNaN(distance_from_home) || Number.isNaN(distance_from_last_transaction) || Number.isNaN(ratio_to_median_purchase_price) ){
+                    console.log({
+                        distance_from_home, distance_from_last_transaction,ratio_to_median_purchase_price
+                    })
+
+                    resultdiv.setAttribute('class', 'alert alert-danger');
+                    resultdiv.textContent = "Los valores de los campos de [Distancia desde lugar de residencia, Distancia desde el lugar de la ultima transacción, Relación con el precio medio de compra] deben ser valores numéricos ";
+                    resultdiv.removeAttribute('hidden');
+                    setTimeout(() => {
+                    resultdiv.setAttribute('hidden', true)
+                    }, 2500);
+                    return;
+                }
+
+                console.log(JSON.stringify({
+                    distance_from_home,
+                    distance_from_last_transaction ,
+                    ratio_to_median_purchase_price,
+                    repeat_retailer: e.target.repeat_retailer.value,
+                    used_chip: e.target.used_chip.value,
+                    used_pin_number: e.target.used_pin_number.value,
+                    online_order:  e.target.online_order.value
+                }))
+
+
+                const resolve = await fetch('http://127.0.0.1:8000/transaccionesAA/hacer-prediccion',{
+                method: "POST",
+                body:JSON.stringify({
+                    distance_from_home,
+                    distance_from_last_transaction ,
+                    ratio_to_median_purchase_price,
+                    repeat_retailer: e.target.repeat_retailer.value,
+                    used_chip: e.target.used_chip.value,
+                    used_pin_number: e.target.used_pin_number.value,
+                    online_order:  e.target.online_order.value
+                }), 
+                headers:{
+                    contentType:"application/json",
+                    
+                },
+              })
+              const res = await resolve.json()
+
+            console.log('respuesta:', res)
+
+            
+            //Creacion de elementos
+            const $li = document.createElement('li');
+                $li.setAttribute('class', 'list-group-item d-flex justify-content-between lh-sm');
+            const $div = document.createElement('div');
+            const $h6 = document.createElement('h6');
+                $h6.setAttribute('class', 'my-0')
+                $h6.textContent = `Prediccion #${contador++}`
+            const $small = document.createElement('small');
+                $small.setAttribute('class', 'text-muted')
+                $small.textContent = `Datos: ${ JSON.stringify(res?.values, null, '\t') }`
+            const $spam = document.createElement('spam');
+                $spam.setAttribute('class', 'text-muted')
+                $spam.textContent = `${(res?.prediccion) ?'Transacción Fraude': 'Transacción Permitida'}`
+                
+            $div.appendChild($h6)
+            $div.appendChild($small)
+            $li.appendChild($div);
+            $li.appendChild($spam);
+
+
+            listaDePrediciones.prepend($li)
+            counter.textContent = contador;
+            
+            if(res?.prediccion == 0){
+                resultdiv.setAttribute('class', 'alert alert-success');
+                resultdiv.textContent = 'La transaccion con las caracteristicas dadas es correcta'
+                resultdiv.removeAttribute('hidden')
+              }else{
+                resultdiv.setAttribute('class', 'alert alert-danger');
+                resultdiv.textContent = 'La transaccion con las caracteristicas dadas es fraudulenta'
+                resultdiv.removeAttribute('hidden')
+              }
+              setTimeout(() => {
+                resultdiv.setAttribute('hidden', true)
+              }, 2500);
+              
+              
+              //Seteo de campos
+              e.target.distance_from_home.value = null
+              e.target.distance_from_last_transaction.value = null
+              e.target.ratio_to_median_purchase_price.value = null
+              
+              calcularBtn.removeAttribute('disabled')
+            })
+            
+            </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
