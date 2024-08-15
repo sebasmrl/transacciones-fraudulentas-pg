@@ -1,5 +1,5 @@
 # Desarrollo e implementación web de un Modelo de Aprendizaje Automático para la predicción de transacciones fraudulentas en Python
-El presente proyecto es el resultado de la investigación bajo el nombre antes mensionado, en donde se impleneta el modelo de aprendizaje con la mejores metricas para detectar transacciones fraudulentas, desarrollado por mi Deivy Sebastian Morales Peña como requisito para la obtención del titulo de Ingeniero de Sistemas, el cual obtuvo una valoracion Laureada en la Corporación Universitaria Rafael Núñez.
+El presente proyecto es el resultado de la investigación bajo el nombre antes mensionado, en donde se implementa el modelo de aprendizaje con la mejores metricas para detectar transacciones fraudulentas, desarrollado por mi Deivy Sebastian Morales Peña como requisito para la obtención del titulo de Ingeniero de Sistemas, el cual obtuvo una valoracion Laureada en la Corporación Universitaria Rafael Núñez.
 
 # Ilustración de la App
 ![](./screenshot-app.png)
